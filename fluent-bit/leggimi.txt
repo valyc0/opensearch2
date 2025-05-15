@@ -1,0 +1,5 @@
+#to start nel container ubuntu
+
+docker exec -it fluentbit-container bash
+
+/opt/fluent-bit/bin/fluent-bit -c /etc/fluent-bit/fluent-bit.conf 

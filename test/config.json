@@ -1,0 +1,10 @@
+{
+  "opensearch_url": "https://localhost:9200",
+  "username": "admin",
+  "password": "Matitone01!",
+  "index_name": "my_index",
+  "concurrent_requests": 10,
+  "rate_per_second": 350,
+  "num_documents": 100000
+}
+

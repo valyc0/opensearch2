@@ -1,0 +1,14 @@
+
+EXPORT TOT INDEX:
+elastictl export \
+  --host 5.tcp.eu.ngrok.io:11064/os/ \
+  roc_alarm-2022* > roc_alarm-2022.json 
+
+EXPORT FILTERED:
+elastictl export \
+  --host 192.168.92.85:8065 \
+  --search '{"query": {"match_all": {}}}' \
+  fmws_event > fmws_event.json 
+  
+IMPORT:  
+cat roc_alarm-2022.json   | elastictl import --host localhost:8065 --workers 100 roc_alarm

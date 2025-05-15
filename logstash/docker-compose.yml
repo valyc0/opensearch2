@@ -1,0 +1,11 @@
+version: '3'
+services:
+  logstash:
+    image: opensearchproject/logstash-oss-with-opensearch-output-plugin:7.16.2
+    container_name: logstash
+    network_mode: host  # Usa la rete host
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    # Non è necessario mappare le porte quando si usa network_mode: host
+    # ports:
+    #   - "5044:5044"

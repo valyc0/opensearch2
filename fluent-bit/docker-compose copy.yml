@@ -1,0 +1,16 @@
+services:
+  fluentbit:
+    image: fluent-bit-ubuntu22
+    networks:
+      - mynet
+    volumes:
+      - ${FLUENT_BIT_CONF:-./fluent-bit.conf}:/etc/fluent-bit/fluent-bit.conf
+      - ${DATA_DIR:-./data}:/data
+      - ${LOG_DIR:-/var/log}:/var/log:ro
+    command: mkdir -p /fluent-bit && /opt/fluent-bit/bin/fluent-bit -c /etc/fluent-bit/fluent-bit.conf
+    deploy:
+      replicas: ${INSTANCE_COUNT:-3}
+
+networks:
+  mynet:
+    external: true

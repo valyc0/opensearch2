@@ -1,0 +1,43 @@
+[SERVICE]
+    Flush             1
+    Daemon            Off
+    Log_Level         debug
+
+[INPUT]
+    Name              tail
+    Path              /var/log/*.log
+    Tag               log.aa
+    Refresh_Interval  1
+    Read_from_Head    On
+    DB                /fluent-bit/tail.db
+    Mem_Buf_Limit     5MB
+    Path_Key          log_file
+
+[INPUT]
+    Name              cpu
+    Tag               system.cpu
+    Interval_Sec      10
+    Interval_NSec     0
+
+[FILTER]
+    Name              record_modifier
+    Match             *
+    Record            hostname ${HOSTNAME}
+    
+[FILTER]
+    Name              lua
+    Match             log.aa
+    Script            /data/add_hostname.lua
+    Call              add_hostname
+
+[OUTPUT]
+    Name              es
+    Match             *
+    Host              opensearch-node1
+    Port              9200
+    Index             my_index
+    HTTP_User         admin
+    HTTP_Passwd       Matitone01!
+    tls               On
+    tls.verify        Off
+    Suppress_Type_Name On

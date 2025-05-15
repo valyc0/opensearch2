@@ -1,0 +1,20 @@
+filebeat.config:
+  modules:
+    path: ${path.config}/modules.d/*.yml
+    reload.enabled: false
+
+filebeat.inputs:
+
+- type: log
+  enabled: true
+  tags: ["cdr"]
+  paths:
+    - /usr/share/filebeat/test/aa*.txt
+
+output.logstash:
+  hosts: ["172.20.0.1:5044"]
+
+#  hosts: ["127.0.0.1:5044"]
+#  ssl.certificate_authorities: ["/etc/ca.crt"]
+#  ssl.certificate: "/etc/client.crt"
+#  ssl.key: "/etc/client.key"
