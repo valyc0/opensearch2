@@ -1,0 +1,27 @@
+# Configurazione Data Prepper per connettere Kafka a OpenSearch
+kafka-to-opensearch-pipeline:
+  source:
+    kafka:
+      bootstrap_servers:
+        - localhost:19092
+      topics:
+        - name: mytopic-in
+          group_id: kafka-to-opensearch-group
+      encryption:
+        type: none
+  processor:
+    - string_converter:
+        upper_case: false
+  buffer:
+    bounded_blocking:
+      buffer_size: 1024
+      batch_size: 256
+  sink:
+    - opensearch:
+        hosts: ["https://localhost:9200"]
+        username: "admin"
+        password: "Matitone01!"
+        index_type: custom
+        index: "logs-%{yyyy.MM.dd}"
+        insecure: true
+        bulk_size: 4

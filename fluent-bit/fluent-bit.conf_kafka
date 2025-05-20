@@ -1,0 +1,30 @@
+[SERVICE]
+    Flush             1
+    Daemon            Off
+    Log_Level         debug
+
+[INPUT]
+    Name              tail
+    Path              /data/aa.log
+    Tag               log.aa
+    Refresh_Interval  1
+    Read_from_Head    On
+    DB                /fluent-bit/tail.db
+    Mem_Buf_Limit     5MB
+    Path_Key          log_file
+
+
+[FILTER]
+    Name              record_modifier
+    Match             *
+    Record            hostname ${HOSTNAME}
+    
+
+[OUTPUT]
+    Name              kafka
+    Match             *
+    Brokers           kafka:9092
+    Topics            mytopic-in
+    Timestamp_Key     @timestamp
+    Timestamp_Format  iso8601
+    Format            json
