@@ -21,10 +21,13 @@
     
 
 [OUTPUT]
-    Name              kafka
+    Name              es
     Match             *
-    Brokers           kafka:9092
-    Topics            mytopic-in
-    Timestamp_Key     @timestamp
-    Timestamp_Format  iso8601
-    Format            json
+    Host              opensearch-node1
+    Port              9200
+    Index             my_index
+    HTTP_User         admin
+    HTTP_Passwd       Matitone01!
+    tls               On
+    tls.verify        Off
+    Suppress_Type_Name On
